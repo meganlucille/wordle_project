@@ -9,6 +9,8 @@ import atexit
 import math
 import time
 import tkinter
+import random
+from WordleDictionary import FIVE_LETTER_WORDS
 
 # Constants
 
@@ -57,6 +59,7 @@ BOARD_WIDTH = N_COLS * SQUARE_SIZE + (N_COLS - 1) * SQUARE_SEP
 BOARD_HEIGHT = N_ROWS * SQUARE_SIZE + (N_ROWS - 1) * SQUARE_SEP
 MESSAGE_X = CANVAS_WIDTH / 2
 MESSAGE_Y = TOP_MARGIN + BOARD_HEIGHT + MESSAGE_SEP
+random_word = random.choice(FIVE_LETTER_WORDS)
 
 class WordleGWindow:
     """This class creates the Wordle window."""
@@ -64,10 +67,10 @@ class WordleGWindow:
     def __init__(self):
         """Creates the Wordle window."""
 
-        def create_grid():
+        def create_grid():                                          # Creates the grid of empty boxes
             return [
                 [
-                    WordleSquare(canvas, i, j) for j in range(N_COLS)
+                    WordleSquare(canvas, i, j, random_word) for j in range(N_COLS) # This is where we can make a random word appear.
                 ] for i in range(N_ROWS)
             ]
 
@@ -102,8 +105,8 @@ class WordleGWindow:
                 ch = tke.char.upper()
             if ch == "\007" or ch == "\177" or ch == "DELETE":
                 self.show_message("")
-                if self._row < N_ROWS and self._col > 0:
-                    self._col -= 1
+                if self._row < N_ROWS and self._col > 0:     # if the gwindow's row is less than the max rows and the gwindow column is greater than 0,
+                    self._col -= 1                           # decrement the gwindow's column by 1
                     sq = self._grid[self._row][self._col]
                     sq.set_letter(" ")
             elif ch == "\r" or ch == "\n" or ch == "ENTER":
@@ -167,8 +170,8 @@ class WordleGWindow:
         root.bind("<Key>", key_action)
         root.bind("<ButtonPress-1>", press_action)
         root.bind("<ButtonRelease-1>", release_action)
-        self._row = 0
-        self._col = 0
+        self._row = 0                       # Initializes the row number to 0
+        self._col = 0                       # Initializes the column number to 0
         atexit.register(start_event_loop)
 
     def get_square_letter(self, row, col):
@@ -208,17 +211,20 @@ class WordleGWindow:
 
 class WordleSquare:
 
-    def __init__(self, canvas, row, col):
+    def __init__(self, canvas, row, col, random_word):               # This is for the grid square. Each grid square has the attributes _canvas, _ch (the letter it has)
         x0 = (CANVAS_WIDTH - BOARD_WIDTH) / 2 + col * SQUARE_DELTA
         y0 = TOP_MARGIN + row * SQUARE_DELTA
         x1 = x0 + SQUARE_SIZE
         y1 = y0 + SQUARE_SIZE
         self._canvas = canvas
-        self._ch = " "
-        self._color = UNKNOWN_COLOR;
-        self._frame = canvas.create_rectangle(x0, y0, x1, y1)
-        self._text = canvas.create_text(x0 + SQUARE_SIZE / 2,
-                                        y0 + SQUARE_SIZE / 2,
+        if (row == 0):
+            self._ch= random_word[col]
+        else:
+            self._ch = " "                                  # Sets the letter for the new box to empty. Try setting it to A
+        self._color = UNKNOWN_COLOR;                    # Sets the color to the unknown color
+        self._frame = canvas.create_rectangle(x0, y0, x1, y1)   # Creates the box using the coordinates generated in lines above
+        self._text = canvas.create_text(x0 + SQUARE_SIZE / 2,   # Creates a spot for the text to go in the grid square.
+                                        y0 + SQUARE_SIZE / 2,   # Is this line what needs to be modified to update the letter? Check the flow when a letter is clicked
                                         text=self._ch,
                                         font=SQUARE_FONT)
 
@@ -226,8 +232,8 @@ class WordleSquare:
         return self._ch
 
     def set_letter(self, ch):
-        self._ch = ch
-        self._canvas.itemconfigure(self._text, text=ch)
+        self._ch = ch          
+        self._canvas.itemconfigure(self._text, text=ch) # On keystroke, this is where the letter gets set
 
     def get_color(self):
         return self._color
