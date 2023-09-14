@@ -109,7 +109,7 @@ class WordleGWindow:
             elif ch == "\r" or ch == "\n" or ch == "ENTER":
                 self.show_message("")
                 s = ""
-                for col in range(N_COLS):
+                for col in range(N_COLS):                           # This grabs the letters in the word, letter by letter.
                     s += self._grid[self._row][col].get_letter();
                 for fn in self._enter_listeners:
                     fn(s)
