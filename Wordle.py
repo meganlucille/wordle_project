@@ -1,11 +1,12 @@
 import random
-from WordleDictionary import FIVE_LETTER_WORDS
+from WordleDictionary import FIVE_LETTER_WORDS, SPANISH_WORDS
 from WordleGraphics import WordleGWindow, CORRECT_COLOR, MISSING_COLOR, PRESENT_COLOR
 from collections import Counter
 
 def wordle():
     # Choose a random word that we are trying to guess
     word_to_guess = random.choice(FIVE_LETTER_WORDS)
+    word_to_guess_spanish = random.choice(SPANISH_WORDS)
     word_to_guess_list = [char for char in word_to_guess.lower()]
     print(word_to_guess_list)
 
@@ -34,11 +35,12 @@ def wordle():
                         letter_count_dict[letter] -= 1
                     else:
                         letter_count_dict.pop(letter, None)
-                elif guess_list[i] in letter_count_dict and letter_count_dict[guess_list[i]] > 0:
+                elif guess_list[i] in word_to_guess_list:
                     gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
-                    letter_count_dict[guess_list[i]] -= 1
+                    # No need to decrement letter_count_dict in this case
                 else:
                     gw.set_square_color(gw.get_current_row(), i, MISSING_COLOR)  # Set missing letters to grey
+
 
             print(letter_count_dict)
             
