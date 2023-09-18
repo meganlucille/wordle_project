@@ -5,6 +5,22 @@ This module defines the dictionary of five-letter words used in
 the Wordle project.
 """
 
+SPANISH_WORDS = [
+    "aleta", "arnes", "astro", "atajo", "audio", "avena", "axila", "bingo", "boxer", "bucal", 
+    "burro", "busto", "cafes", "cajas", "caliz", "callo", "canas", "canes", "comic", "danos", 
+    "datos", "dedos", "donas", "donas", "dones", "drama", "dubai", "ellas", "encia", "enojo", 
+    "envio", "error", "esqui", "euros", "femur", "forma", "fosil", "fotos", "freno", "fresa", 
+    "gafas", "gales", "gases", "gatos", "genes", "ghana", "goles", "gorra", "gruas", "grumo", 
+    "haiti", "hotel", "huevo", "hurto", "ideas", "iglus", "ingle", "islas", "japon", "jarra", 
+    "jefes", "jerga", "jugos", "julio", "lagos", "lazos", "leyes", "loros", "lunar", "magos", 
+    "manos", "mapas", "mares", "media", "memes", "menta", "menus", "mesas", "metas", "miles", 
+    "modas", "monos", "moscu", "movil", "multa", "naves", "nepal", "ninos", "notas", "nubes", 
+    "nudos", "obras", "ojera", "ollas", "ondas", "onzas", "opera", "osito", "ovulo", "oxido", 
+    "panal", "panes", "paris", "pasas", "paseo", "patos", "pausa", "pauta", "pavos", "pecas", 
+    "peces", "regla", "reino", "reyes", "rimel", "riocas", "ritos", "rulos", "rusia", "santa", 
+    "sapos", "vacas", "valle", "vasos", "viaje"
+]
+
 FIVE_LETTER_WORDS = [
     "aahed", "aalii", "abaca", "abaci", "aback", "abaft", "abamp",
     "abase", "abash", "abate", "abbas", "abbey", "abbot", "abeam",
