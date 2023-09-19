@@ -95,7 +95,7 @@ class WordleGWindow:
                                  CANVAS_WIDTH / 2,
                                  MESSAGE_Y)
 
-        def key_action(tke):
+        def key_action(tke, keep_going=True):
             if isinstance(tke, str):
                 ch = tke.upper()
             else:
@@ -106,7 +106,7 @@ class WordleGWindow:
                     self._col -= 1
                     sq = self._grid[self._row][self._col]
                     sq.set_letter(" ")
-            elif ch == "\r" or ch == "\n" or ch == "ENTER":
+            elif (ch == "\r" or ch == "\n" or ch == "ENTER") and keep_going:
                 self.show_message("")
                 s = ""
                 for col in range(N_COLS):                           # This grabs the letters in the word, letter by letter.
@@ -201,6 +201,9 @@ class WordleGWindow:
 
     def add_enter_listener(self, fn):
         self._enter_listeners.append(fn)
+    
+    def remove_enter_listener(self, fn):
+        self._enter_listeners.remove(fn)
 
     def show_message(self, msg, color="Black"):
         self._message.set_text(msg, color)
