@@ -61,7 +61,7 @@ def wordle():
                     highlightthickness = 0,
                     command= share_results_action,
                     relief = "flat")
-                b0.place(x = 340, y = 420, width = 150, height = 38)
+                b0.place(x = 340, y = 430, width = 150, height = 38)
                 
             
             else:
