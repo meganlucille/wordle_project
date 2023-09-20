@@ -27,13 +27,15 @@ def wordle():
             # Convert the guess string to a list)
             guess_list = [char for char in s.lower()]
             print(guess_list)
-
+            
             # Loop through each letter in the row, checking if any are exact matches. If exact matches, reduce the letter count dictionary by 1
             for i in range(5):
                 # Check for right letter in right place
                 if word_to_guess_list[i] == guess_list[i]:
                     # Set the square to the correct color
                     gw.set_square_color(gw.get_current_row(), i, CORRECT_COLOR)
+                    gw.set_key_color(guess_list[i].upper(), CORRECT_COLOR)
+
                     correct_count += 1
                     letter = word_to_guess_list[i]
                     if letter_count_dict.get(letter, 0) > 0:
@@ -42,10 +44,14 @@ def wordle():
                         letter_count_dict.pop(letter, None)
                 elif guess_list[i] in word_to_guess_list:
                     gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
-                    # No need to decrement letter_count_dict in this case
+                    gw.set_key_color(guess_list[i].upper(), PRESENT_COLOR)
+
                 else:
                     gw.set_square_color(gw.get_current_row(), i, MISSING_COLOR)  # Set missing letters to grey
-                
+                    gw.set_key_color(guess_list[i].upper(), MISSING_COLOR)
+
+                #gw.set_key_color(guess_list[i], key_color)
+
             # Check if user won
             if correct_count == 5:
                 # Success Toast
