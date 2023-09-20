@@ -4,10 +4,30 @@ from WordleGraphics import WordleGWindow, CORRECT_COLOR, MISSING_COLOR, PRESENT_
 from collections import Counter
 from tkinter import *
 
-def wordle():
-    # Choose a random word that we are trying to guess
-    word_to_guess = random.choice(FIVE_LETTER_WORDS)
-    word_to_guess_spanish = random.choice(SPANISH_WORDS)
+def select_language():
+    root = Tk()
+    root.geometry("300x100")
+    root.title("Select Language")
+    
+    def start_game(language):
+        root.destroy()
+        wordle(language)
+    
+    english_button = Button(root, text="English", command=lambda: start_game("English"))
+    spanish_button = Button(root, text="Spanish", command=lambda: start_game("Spanish"))
+    
+    english_button.pack(pady=10)
+    spanish_button.pack(pady=10)
+    
+    root.mainloop()
+
+def wordle(language):
+    # Choose a random word that we are trying to guess - based on language selected
+    if language == "English":
+        word_to_guess = random.choice(FIVE_LETTER_WORDS)
+    elif language == "Spanish":
+        word_to_guess = random.choice(SPANISH_WORDS)
+
     word_to_guess_list = [char for char in word_to_guess.lower()]
     keys_array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -23,7 +43,7 @@ def wordle():
         # Set the correct count to 0. For future win checking
         correct_count = 0
 
-        if s.lower() in FIVE_LETTER_WORDS:
+        if s.lower() in FIVE_LETTER_WORDS or s.lower() in SPANISH_WORDS:
             gw.show_message("Valid word!")
 
             # Convert the guess string to a list)
@@ -104,4 +124,4 @@ def wordle():
 
 # Startup code
 if __name__ == "__main__":
-    wordle()
+    select_language()
