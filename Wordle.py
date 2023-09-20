@@ -34,11 +34,7 @@ def wordle(language):
     print(word_to_guess_list)
 
     #check for duplicate letters in word
-    double_letter = []
-    for letter in word_to_guess_list:
-        if word_to_guess_list.count(letter) > 1 and letter not in double_letter:
-            double_letter.append(letter)
-            double_letter.append(letter)
+
 
 
     # Create a dictionary of the letters used and their frequency. Use Counter to count letter occurrences
@@ -50,6 +46,12 @@ def wordle(language):
     def enter_action(s):
         # Set the correct count to 0. For future win checking
         correct_count = 0
+        double_letter = []
+        
+        for letter in word_to_guess_list:
+            if word_to_guess_list.count(letter) > 1 and letter not in double_letter:
+                double_letter.append(letter)
+                double_letter.append(letter)
 
         if s.lower() in FIVE_LETTER_WORDS or s.lower() in SPANISH_WORDS:
             gw.show_message("Valid word!")
