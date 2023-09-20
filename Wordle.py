@@ -80,27 +80,37 @@ def wordle(language):
 
             # Check if user won
             if correct_count == 5:
-                # Success Toast
-                gw.show_message("You won!")
+                if language == 'english':
+                    # Success Toast
+                    gw.show_message("You won!")
+                else:
+                    gw.show_message("¡Ganaste!")
 
                 # Make it so that enter key doesn't work
                 gw.remove_enter_listener(enter_action)
 
+                if language == 'english':
+                    button_text = 'Click to Share results'
+                else:
+                    button_text = 'Compartir'
                 # Make share results button appear
                 b0 = Button(
-                    text='Click to Share results',
+                    text= button_text,
                     borderwidth = 0,
                     highlightthickness = 0,
                     command= share_results_action,
                     relief = "flat")
-                b0.place(x = 340, y = 430, width = 150, height = 38)
+                b0.place(x = 340, y = 440, width = 150, height = 38)
                 
             
             else:
                 # If didn't win, check if it's the last row.
                 if gw.get_current_row() == 5:
-                    # Failure Toast
-                    gw.show_message("You lost. Try again!")
+                    # Failure Toas
+                    if language == 'english':
+                        gw.show_message("You lost. Try again!")
+                    else:
+                        gw.show_message("No ganaste. Lo siento")
 
                     # Make it so that enter key doesn't work
                     gw.remove_enter_listener(enter_action)
@@ -111,14 +121,20 @@ def wordle(language):
                     
 
         else:
-            gw.show_message("Not in word list")
+            if language == 'english':
+                gw.show_message("Not in word list")
+            else:
+                gw.show_message("No es una palabra")
 
     # Sets the squares to not have a letter
     def share_results_action():
         for row in range(6):
             for col in range(5):
                 gw.set_square_letter(row,col,"")
-
+        if language == 'english':
+            gw.show_message("Screenshot above")
+        else:
+            gw.show_message("Haz un screenshot arriba")
     gw = WordleGWindow()
     gw.add_enter_listener(enter_action)
 
