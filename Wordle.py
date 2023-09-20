@@ -9,6 +9,8 @@ def wordle():
     word_to_guess = random.choice(FIVE_LETTER_WORDS)
     word_to_guess_spanish = random.choice(SPANISH_WORDS)
     word_to_guess_list = [char for char in word_to_guess.lower()]
+    keys_array = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+
     print(word_to_guess_list)
 
     # Create a dictionary of the letters used and their frequency. Use Counter to count letter occurrences
@@ -34,7 +36,9 @@ def wordle():
                 if word_to_guess_list[i] == guess_list[i]:
                     # Set the square to the correct color
                     gw.set_square_color(gw.get_current_row(), i, CORRECT_COLOR)
-                    gw.set_key_color(guess_list[i].upper(), CORRECT_COLOR)
+                    if guess_list[i].upper() in keys_array:
+                        gw.set_key_color(guess_list[i].upper(), CORRECT_COLOR)
+                        keys_array.remove(guess_list[i].upper())
 
                     correct_count += 1
                     letter = word_to_guess_list[i]
@@ -44,13 +48,15 @@ def wordle():
                         letter_count_dict.pop(letter, None)
                 elif guess_list[i] in word_to_guess_list:
                     gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
-                    gw.set_key_color(guess_list[i].upper(), PRESENT_COLOR)
+                    if guess_list[i].upper() in keys_array:
+                        gw.set_key_color(guess_list[i].upper(), PRESENT_COLOR)
+                        keys_array.remove(guess_list[i].upper())
 
                 else:
                     gw.set_square_color(gw.get_current_row(), i, MISSING_COLOR)  # Set missing letters to grey
-                    gw.set_key_color(guess_list[i].upper(), MISSING_COLOR)
-
-                #gw.set_key_color(guess_list[i], key_color)
+                    if guess_list[i].upper() in keys_array:
+                        gw.set_key_color(guess_list[i].upper(), MISSING_COLOR)
+                        keys_array.remove(guess_list[i].upper())
 
             # Check if user won
             if correct_count == 5:
