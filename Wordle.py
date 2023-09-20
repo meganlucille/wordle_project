@@ -70,7 +70,7 @@ def wordle(language):
                     gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
                     if guess_list[i].upper() in keys_array:
                         gw.set_key_color(guess_list[i].upper(), PRESENT_COLOR)
-                        keys_array.remove(guess_list[i].upper())
+                        #keys_array.remove(guess_list[i].upper())
 
                 else:
                     gw.set_square_color(gw.get_current_row(), i, MISSING_COLOR)  # Set missing letters to grey
