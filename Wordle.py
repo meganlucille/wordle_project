@@ -33,6 +33,14 @@ def wordle(language):
 
     print(word_to_guess_list)
 
+    #check for duplicate letters in word
+    double_letter = []
+    for letter in word_to_guess_list:
+        if word_to_guess_list.count(letter) > 1 and letter not in double_letter:
+            double_letter.append(letter)
+            double_letter.append(letter)
+
+
     # Create a dictionary of the letters used and their frequency. Use Counter to count letter occurrences
     letter_count = Counter(letter.lower() for letter in word_to_guess if letter.isalpha())
     # Convert the Counter to a dictionary
@@ -67,10 +75,22 @@ def wordle(language):
                     else:
                         letter_count_dict.pop(letter, None)
                 elif guess_list[i] in word_to_guess_list:
-                    gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
+                    double_letter_length = len(double_letter)
+                    if double_letter_length > 0:
+                        if guess_list[i] == double_letter[0]:  
+                            if double_letter_length == 1:
+                                gw.set_square_color(gw.get_current_row(), i, MISSING_COLOR)
+                                double_letter.remove(double_letter[0])
+                            else:
+                                gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
+                                double_letter.remove(double_letter[0])
+                        else:
+                            gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
+                    else:
+                        gw.set_square_color(gw.get_current_row(), i, PRESENT_COLOR)
+
                     if guess_list[i].upper() in keys_array:
                         gw.set_key_color(guess_list[i].upper(), PRESENT_COLOR)
-                        #keys_array.remove(guess_list[i].upper())
 
                 else:
                     gw.set_square_color(gw.get_current_row(), i, MISSING_COLOR)  # Set missing letters to grey
@@ -80,7 +100,7 @@ def wordle(language):
 
             # Check if user won
             if correct_count == 5:
-                if language == 'english':
+                if language == 'English':
                     # Success Toast
                     gw.show_message("You won!")
                 else:
@@ -89,7 +109,7 @@ def wordle(language):
                 # Make it so that enter key doesn't work
                 gw.remove_enter_listener(enter_action)
 
-                if language == 'english':
+                if language == 'English':
                     button_text = 'Click to Share results'
                 else:
                     button_text = 'Compartir'
@@ -107,7 +127,7 @@ def wordle(language):
                 # If didn't win, check if it's the last row.
                 if gw.get_current_row() == 5:
                     # Failure Toas
-                    if language == 'english':
+                    if language == 'English':
                         gw.show_message("You lost. Try again!")
                     else:
                         gw.show_message("No ganaste. Lo siento")
@@ -121,7 +141,7 @@ def wordle(language):
                     
 
         else:
-            if language == 'english':
+            if language == 'English':
                 gw.show_message("Not in word list")
             else:
                 gw.show_message("No es una palabra")
@@ -131,7 +151,7 @@ def wordle(language):
         for row in range(6):
             for col in range(5):
                 gw.set_square_letter(row,col,"")
-        if language == 'english':
+        if language == 'English':
             gw.show_message("Screenshot above")
         else:
             gw.show_message("Haz un screenshot arriba")
