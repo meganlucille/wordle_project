@@ -54,7 +54,11 @@ def wordle(language):
                 double_letter.append(letter)
 
         if s.lower() in FIVE_LETTER_WORDS or s.lower() in SPANISH_WORDS:
-            gw.show_message("Valid word!")
+            if language == 'english':
+                gw.show_message("Valid word!")
+            else:
+                gw.show_message("¡Es una palabra!")
+
 
             # Convert the guess string to a list)
             guess_list = [char for char in s.lower()]
